@@ -55,8 +55,8 @@ callsite@1.0.0:
   resolved "https://registry.yarnpkg.com/callsite/-/callsite-1.0.0.tgz#280398e5d664bd74038b6f0905153e6e8af1bc20"
 
 child_pty@^3.0.0:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/child_pty/-/child_pty-3.0.7.tgz#0afa116493ca3849ffae0a1aabb78616e6426516"
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/child_pty/-/child_pty-3.0.8.tgz#e5bd41d10d1787fced57012f49db425f9e203691"
   dependencies:
     extend "^3.0.0"
     nan "^2.4.0"
@@ -119,9 +119,9 @@ debug@2.3.3:
   dependencies:
     ms "0.7.2"
 
-debug@^2.6.8:
-  version "2.6.8"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
+debug@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
     ms "2.0.0"
 
