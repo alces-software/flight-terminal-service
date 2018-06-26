@@ -3,9 +3,12 @@
 	"port": 25288,
 	"interface": "127.0.0.1",
         "socketIO": {
-          "path": "/terminal-service/socket.io"
+          "path": "/terminal-service/socket.io",
+          "namespace": "pty"
         },
-        "staticFilesPrefix": "terminal-service",
+        "staticFiles": {
+          "prefix": "terminal-service"
+        },
         "ssh": {
           "path": "/usr/bin/ssh",
           "options": [

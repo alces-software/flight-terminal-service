@@ -4,7 +4,7 @@
   "description": "A terminal service using child_pty and socket.io-stream for use by terminal.js",
   "scripts": {
     "test": "jshint app.js public",
-    "start": "DEBUG='*' node app.js"
+    "start": "DEBUG='*' node lib/app.js"
   },
   "author": "Enno Boland <eb@s01.de>",
   "license": "MIT",
