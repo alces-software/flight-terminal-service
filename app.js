@@ -6,11 +6,11 @@ const ss = require('socket.io-stream');
 const debug = require('debug')('FlightTerminalService');
 
 const config = require('./config.json');
+const ptys = require('./ptysRegistry');
 
 const server = http.createServer()
   .listen(config.port, config.interface);
 
-const ptys = {};
 const asset_re = new RegExp('^/' + config.staticFilesPrefix + '/static/(.*)');
 const index_re = new RegExp('^/' + config.staticFilesPrefix + '(/(index.html)?)?');
 
@@ -37,7 +37,7 @@ socketio(server, {path: config.socketIO.path}).of('pty').on('connection', (socke
   // receives a bidirectional pipe from the client see index.html
   // for the client-side
   ss(socket).on('new', function(stream, options) {
-    debug('New stream %o %o', stream, options);
+    debug('New stream %o', ptys.streamDebug(stream));
 
     const cmd = [
       config.ssh.path,
@@ -48,20 +48,16 @@ socketio(server, {path: config.socketIO.path}).of('pty').on('connection', (socke
     const pty = child_pty.spawn(...cmd);
 
     pty.stdout.pipe(stream).pipe(pty.stdin);
-    ptys[stream] = pty;
+    ptys.register(stream, pty);
     stream.on('end', function() {
       debug('Stream ended (%o)', stream);
-      pty.kill('SIGHUP');
-      delete ptys[stream];
+      ptys.kill(stream);
     });
   });
 });
 
 process.on('exit', function() {
-  const k = Object.keys(ptys);
-  for(var i = 0; i < k.length; i++) {
-    ptys[k].kill('SIGHUP');
-  }
+  ptys.killAll();
 });
 
 debug('Listening on %s:%s', config.interface, config.port);
