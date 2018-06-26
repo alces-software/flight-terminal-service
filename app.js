@@ -39,19 +39,13 @@ socketio(server, {path: config.socketIO.path}).of('pty').on('connection', functi
   ss(socket).on('new', function(stream, options) {
     debug('New stream %o %o', stream, options);
 
-    var pty = child_pty.spawn(
-      '/usr/bin/ssh',
-      [
-        // The following two options prevent use of the SSH agent and require
-        // the user to provide a password for each session started.
-        '-o', 'IdentitiesOnly yes', '-F', '/dev/null',
-        // The following two options prevent the annoying "The authenticity of
-        // host...Are you sure you wish to continue?" message from appearing.
-        '-o', 'UserKnownHostsFile=/dev/null', '-o', 'StrictHostKeyChecking=no',
-        'localhost'
-      ],
-      options
-    );
+    var sshArgs = [];
+    for (var i=0; i<config.ssh.options.length; i++) {
+      sshArgs.push(config.ssh.options[i]);
+    }
+    sshArgs.push(config.ssh.host);
+    debug('Running %s with args %o', config.ssh.path, sshArgs);
+    var pty = child_pty.spawn(config.ssh.path, sshArgs, options);
 
     pty.stdout.pipe(stream).pipe(pty.stdin);
     ptys[stream] = pty;

@@ -5,5 +5,15 @@
         "socketIO": {
           "path": "/terminal-service/socket.io"
         },
-        "staticFilesPrefix": "terminal-service"
+        "staticFilesPrefix": "terminal-service",
+        "ssh": {
+          "path": "/usr/bin/ssh",
+          "options": [
+            "-o", "IdentitiesOnly yes",
+            "-F", "/dev/null",
+            "-o", "UserKnownHostsFile=/dev/null",
+            "-o", "StrictHostKeyChecking=no"
+          ],
+          "host": "localhost"
+        }
 }
