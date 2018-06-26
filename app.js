@@ -1,25 +1,25 @@
-var http = require('http'),
-  fs = require('fs'),
-  socketio = require('socket.io'),
-  child_pty = require('child_pty'),
-  ss = require('socket.io-stream'),
-  debug = require('debug')('FlightTerminalService');
+const http = require('http');
+const fs = require('fs');
+const socketio = require('socket.io');
+const child_pty = require('child_pty');
+const ss = require('socket.io-stream');
+const debug = require('debug')('FlightTerminalService');
 
-var config = require('./config.json');
+const config = require('./config.json');
 
-var server = http.createServer()
+const server = http.createServer()
   .listen(config.port, config.interface);
 
-var ptys = {};
-var asset_re = new RegExp('^/' + config.staticFilesPrefix + '/static/(.*)');
-var index_re = new RegExp('^/' + config.staticFilesPrefix + '(/(index.html)?)?');
+const ptys = {};
+const asset_re = new RegExp('^/' + config.staticFilesPrefix + '/static/(.*)');
+const index_re = new RegExp('^/' + config.staticFilesPrefix + '(/(index.html)?)?');
 
 server.on('request', function(req, res) {
-  var file = null;
+  const file = null;
   debug('Request for %s', req.url);
 
-  var asset_match = req.url.match(asset_re);
-  var index_match = req.url.match(index_re);
+  const asset_match = req.url.match(asset_re);
+  const index_match = req.url.match(index_re);
 
   if (asset_match) {
     file = '/public/static/' + asset_match[1];
@@ -33,19 +33,19 @@ server.on('request', function(req, res) {
   fs.createReadStream(__dirname + file).pipe(res);
 });
 
-socketio(server, {path: config.socketIO.path}).of('pty').on('connection', function(socket) {
+socketio(server, {path: config.socketIO.path}).of('pty').on('connection', (socket) => {
   // receives a bidirectional pipe from the client see index.html
   // for the client-side
   ss(socket).on('new', function(stream, options) {
     debug('New stream %o %o', stream, options);
 
-    var sshArgs = [];
-    for (var i=0; i<config.ssh.options.length; i++) {
-      sshArgs.push(config.ssh.options[i]);
-    }
-    sshArgs.push(config.ssh.host);
-    debug('Running %s with args %o', config.ssh.path, sshArgs);
-    var pty = child_pty.spawn(config.ssh.path, sshArgs, options);
+    const cmd = [
+      config.ssh.path,
+      [ ...config.ssh.options, config.ssh.host ],
+      options
+    ];
+    debug('Running %o', cmd);
+    const pty = child_pty.spawn(...cmd);
 
     pty.stdout.pipe(stream).pipe(pty.stdin);
     ptys[stream] = pty;
@@ -58,10 +58,8 @@ socketio(server, {path: config.socketIO.path}).of('pty').on('connection', functi
 });
 
 process.on('exit', function() {
-  var k = Object.keys(ptys);
-  var i;
-
-  for(i = 0; i < k.length; i++) {
+  const k = Object.keys(ptys);
+  for(var i = 0; i < k.length; i++) {
     ptys[k].kill('SIGHUP');
   }
 });
