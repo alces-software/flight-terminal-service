@@ -3,6 +3,7 @@
 	"port": 25288,
 	"interface": "127.0.0.1",
         "socketIO": {
-          "path": "/tutorials/socket.io"
-        }
+          "path": "/terminal-service/socket.io"
+        },
+        "staticFilesPrefix": "terminal-service"
 }

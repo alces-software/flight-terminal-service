@@ -1,7 +1,7 @@
 {
-  "name": "webterm",
+  "name": "flight-terminal-service",
   "version": "1.0.0",
-  "description": "A simple webterminal using terminal.js and child_pty",
+  "description": "A terminal service using child_pty and socket.io-stream for use by terminal.js",
   "scripts": {
     "test": "jshint app.js public",
     "start": "DEBUG='*' node app.js"

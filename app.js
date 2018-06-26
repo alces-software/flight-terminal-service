@@ -3,7 +3,7 @@ var http = require('http'),
   socketio = require('socket.io'),
   child_pty = require('child_pty'),
   ss = require('socket.io-stream'),
-  debug = require('debug')('FlightTutorials');
+  debug = require('debug')('FlightTerminalService');
 
 var config = require('./config.json');
 
@@ -11,13 +11,15 @@ var server = http.createServer()
   .listen(config.port, config.interface);
 
 var ptys = {};
+var asset_re = new RegExp('^/' + config.staticFilesPrefix + '/static/(.*)');
+var index_re = new RegExp('^/' + config.staticFilesPrefix + '(/(index.html)?)?');
 
 server.on('request', function(req, res) {
   var file = null;
   debug('Request for %s', req.url);
 
-  var asset_match = req.url.match(/^\/tutorials\/static\/(.*)/);
-  var index_match = req.url.match(/^\/tutorials(\/(index.html)?)?/);
+  var asset_match = req.url.match(asset_re);
+  var index_match = req.url.match(index_re);
 
   if (asset_match) {
     file = '/public/static/' + asset_match[1];
