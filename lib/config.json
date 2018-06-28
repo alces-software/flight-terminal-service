@@ -9,14 +9,14 @@
         "staticFiles": {
           "prefix": "terminal-service"
         },
-        "ssh": {
-          "path": "/usr/bin/ssh",
-          "options": [
+        "cmd": {
+          "exe": "/usr/bin/ssh",
+          "args": [
             "-o", "IdentitiesOnly yes",
             "-F", "/dev/null",
             "-o", "UserKnownHostsFile=/dev/null",
-            "-o", "StrictHostKeyChecking=no"
-          ],
-          "host": "localhost"
+            "-o", "StrictHostKeyChecking=no",
+            "localhost"
+          ]
         }
 }
