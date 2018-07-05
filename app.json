@@ -1,0 +1,9 @@
+{
+  "name": "flight-terminal-service",
+  "description": "A terminal service using child_pty and socket.io-stream for use by terminal.js",
+  "repository": "https://github.com/alces-software/flight-terminal-service",
+  "scripts": {
+    "dokku": {
+    }
+  }
+}
