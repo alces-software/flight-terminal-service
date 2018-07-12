@@ -1,6 +1,6 @@
 {
   "name": "flight-terminal-service",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A terminal service using child_pty and socket.io-stream for use by terminal.js",
   "scripts": {
     "test": "jshint app.js public",
