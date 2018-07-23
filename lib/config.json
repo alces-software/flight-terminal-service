@@ -12,7 +12,7 @@
         "cmd": {
           "exe": "/usr/bin/ssh",
           "args": [
-            "-o", "IdentitiesOnly yes",
+            "-o", "IdentitiesOnly=yes",
             "-F", "/dev/null",
             "-o", "UserKnownHostsFile=/dev/null",
             "-o", "StrictHostKeyChecking=no",
