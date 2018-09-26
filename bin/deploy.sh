@@ -6,7 +6,7 @@ main() {
     parse_arguments "$@"
     header "Checking repo is clean"
     abort_if_uncommitted_changes_present
-    header "Deploying to ${REMOTE}"
+    header "Deploying ${COMMIT_ISH} to ${REMOTE}"
     deploy
 }
 
@@ -18,7 +18,7 @@ abort_if_uncommitted_changes_present() {
 }
 
 deploy() {
-    git push ${REMOTE} -f HEAD:master 2> >(indent 1>&2) | indent
+    git push ${REMOTE} -f "${COMMIT_ISH}":refs/heads/master 2> >(indent 1>&2) | indent
 }
 
 header() {
@@ -34,15 +34,18 @@ indent() {
 }
 
 usage() {
-    echo "Usage: $(basename $0) [options]"
+    echo "Usage: $(basename $0) [options] [<commit-ish>]"
     echo
-    echo "Deploy HEAD to a dokku app"
+    echo "Deploy <commit-ish> to a dokku app"
+    echo
+    echo -e "      If <commit-sh> is not given use HEAD"
     echo
     echo -e "      --production\t\tDeploy to the production environment"
     echo -e "      --help\t\tShow this help message"
 }
 
 REMOTE=dokku-staging
+COMMIT_ISH=HEAD
 
 parse_arguments() {
     while [[ $# > 0 ]] ; do
@@ -64,10 +67,15 @@ parse_arguments() {
                 exit 0
                 ;;
 
-            *)
+            --*)
                 echo "$(basename $0): unrecognized option ${key}"
                 usage
                 exit 1
+                ;;
+
+            *)
+                COMMIT_ISH="${key}"
+                shift
                 ;;
         esac
     done

@@ -1,9 +1,10 @@
 {
   "name": "flight-terminal-service",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A terminal service using child_pty and socket.io-stream for use by terminal.js",
   "scripts": {
     "test": "jshint app.js public",
+    "repl": "local-repl",
     "start": "DEBUG=${DEBUG:-FlightTerminalService*} node lib/app.js"
   },
   "author": "Enno Boland <eb@s01.de>",
@@ -29,6 +30,7 @@
     "node": true
   },
   "devDependencies": {
-    "jshint": "^2.5.10"
+    "jshint": "^2.5.10",
+    "local-repl": "^4.0.0"
   }
 }
