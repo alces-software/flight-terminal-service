@@ -2,6 +2,9 @@
   "name": "flight-terminal-service",
   "version": "0.1.7",
   "description": "A terminal service using child_pty and socket.io-stream for use by terminal.js",
+  "engines": {
+    "node": "8.12.0"
+  },
   "scripts": {
     "test": "jshint app.js public",
     "repl": "local-repl",
