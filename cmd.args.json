@@ -1,0 +1,9 @@
+{
+  "args": [
+    "-o", "IdentitiesOnly=yes",
+    "-F", "/dev/null",
+    "-o", "UserKnownHostsFile=/dev/null",
+    "-o", "StrictHostKeyChecking=no",
+    "localhost"
+  ]
+}

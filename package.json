@@ -15,6 +15,7 @@
   "dependencies": {
     "child_pty": "^3.0.0",
     "debug": "^3.1.0",
+    "dotenv": "^7.0.0",
     "jsonwebtoken": "^8.3.0",
     "node-fetch": "^2.1.2",
     "socket.io": "^1.4.5",
