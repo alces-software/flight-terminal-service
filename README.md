@@ -3,6 +3,14 @@
 Flight Terminal Service is a service provided by Alces Flight to support
 embedding a terminal in a browser session.
 
+## Prerequisites
+
+* Yarn
+* Node.js v8.12
+
+## Installation
+
+* Clone this repo using `git clone https://github.com/alces-software/flight-terminal-service.git`
 
 ## Quick start
 
